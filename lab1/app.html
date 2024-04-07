@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="vue3.js"></script>
+    <link rel="stylesheet" href="app.css">
+</head>
+
+
+<body>
+
+    
+    
+<div id="mainapp">
+
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#" @click.prevent="isWishlistVisible=false">books</a>>
+            <button class="btn btn-warning " @click="isWishlistVisible=true" href="#">wishlist ❤️</button>           
+        </div>
+    </nav>
+    <div class="row " v-if="isWishlistVisible==false">
+        <div class="col-sm-4 mt-4 " v-for="book in books">
+            <div class="card mt-4">
+                <div class="image">
+                    <img :src="book.image" :alt="book.name" />
+                </div>
+                <div class="card-inner">
+                    <div class="header">
+                        <h2>{{ book.name }}</h2>
+                        <h3>{{ book.author }}</h3>
+                    </div>
+                    <div class="content">
+                        <p>Category: {{ book.category }}</p>
+                        <p :class="{ 'less': book.pages < 50 , 'more': book.pages >= 50 }">Pages: {{ book.pages }}</p>
+                        <p>Price : {{Intl.NumberFormat('ar-SA', {style: 'currency' , currency:'SAR'}).format(book.price)}}</p>
+                        <p>ISBN: {{ book.ISBN }}</p>
+                        <button :disabled="isInWishlist(book)" @click="addToWishlist(book)" :class="{ 'btn-disabled': isInWishlist(book) }">Add to Wishlist</button>
+                        <span class="heart-icon">❤️</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--wishlist-->
+<div class="d-flex align-items-baseline justify-content-between p-2 m-2 text-danger" v-else>
+     <h4 class="text-center" v-if="wishlist.items.length==0">Sorry, Add Books to Wishlist !!!</h4> 
+    
+     <table class="table table-bordered table-striped" v-else>
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>ISBN</th>
+                <th>Name</th>
+                <th>Author</th>
+                <th>Category</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="(item, index) in wishlist.items" >
+                <td>
+                    <img :src="item.book.image" :alt="item.book.name" style="max-width: 100px; max-height: 100px;">
+                </td>
+                <td>{{ item.book.ISBN }}</td>
+                <td>{{ item.book.name }}</td>
+                <td>{{ item.book.author }}</td>
+                <td>{{ item.book.category }}</td>
+                <td>
+                    <button class ="btn btn-outline-danger" @click="removeFromWishlist(index)">Remove</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+
+    
+    </div>
+    
+</div>
+
+</div>
+
+
+
+
+
+
+<script src="./books.js"></script>
+
+<script>
+const app = Vue.createApp({
+    data() {
+        return {
+            books: books,
+            isWishlistVisible: false,
+            wishlist: {
+                items: []
+            },
+        };
+    },
+    methods: {
+        addToWishlist(book) {
+                this.wishlist.items.push({ book: book });
+        }
+        ,
+        removeFromWishlist(index) {
+            this.wishlist.items.splice(index, 1);
+        },
+        isInWishlist(book) {
+            return this.wishlist.items.some(item => item.book.ISBN === book.ISBN);
+        }
+    }
+    
+});
+
+
+    app.mount('#mainapp');
+</script>
+</body>
+</html>
