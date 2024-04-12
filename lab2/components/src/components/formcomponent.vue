@@ -1,0 +1,132 @@
+<template>
+    
+    <div>
+        
+      <div class="row">
+        <div class="offset-lg-2 col-lg-8 col-sm-8 col-8 border rounded main-section">
+          <h3 class="text-center text-inverse">Form Validation</h3>
+          <hr>
+          <form class="container" id="needs-validation" novalidate @submit.prevent="submitForm">
+            <div class="row">
+              <div class="col-lg-6 col-sm-6 col-12">
+                <div class="form-group">
+                  <label class="text-inverse" for="validationCustom03">Name</label>
+                  <input type="text" class="form-control" id="validationCustom03" placeholder="Name" v-model="formData.name" required>
+                  <div class="invalid-feedback">
+                    Please provide a valid Name.
+                  </div>
+                </div>  
+              </div>
+              <div class="col-lg-6 col-sm-6 col-12">
+                <div class="form-group">
+                  <label class="text-inverse" for="validationCustom03">University</label>
+                  <input type="text" class="form-control" id="validationCustom03" placeholder="University" v-model="formData.university" required>
+                  <div class="invalid-feedback">
+                    Please provide a valid University name.
+                  </div>
+                </div>  
+              </div>
+              <div class="col-lg-6 col-sm-6 col-12">
+                <div class="form-group">
+                  <label class="text-inverse" for="select-menu">Gender</label>
+                  <select class="custom-select d-block form-control" id="image" v-model="formData.gender" required>
+                    <option value="1">Male</option>
+                    <option value="2">Female</option>
+                  </select>
+                  <div class="invalid-feedback">
+                    Please select any option.
+                  </div>
+                </div>  
+              </div>
+              <div class="col-lg-6 col-sm-6 col-12">
+                <div class="form-group">
+                  <label class="text-inverse">Skills</label>
+                  <div class="custom-controls-stacked">
+                    <label class="custom-control custom-checkbox">
+                      <input type="checkbox" v-model="formData.skills.vue" required>
+                      <span class="custom-control-indicator"></span>
+                      <span class="custom-control-description"> Vue.js</span>
+                    </label>
+                    <label class="custom-control custom-checkbox">
+                      <input type="checkbox" v-model="formData.skills.react" required>
+                      <span class="custom-control-indicator"></span>
+                      <span class="custom-control-description"> React.js</span>
+                    </label>
+                    <label class="custom-control custom-checkbox">
+                      <input type="checkbox" v-model="formData.skills.angular" required>
+                      <span class="custom-control-indicator"></span>
+                      <span class="custom-control-description"> Angular</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-12 text-center mt-0">
+              <button class="btn btn-info" type="submit">Submit form</button>
+            </div>  
+          </form>
+        </div>
+
+      </div>
+      <div class="row mt-4" v-if="submitted">
+          <div class="col-lg-6 offset-lg-3">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Form Data</h5>
+                <p class="card-text"><strong>Name:</strong> {{ formData.name }}</p>
+                <p class="card-text"><strong>University:</strong> {{ formData.university }}</p>
+                <p class="card-text"><strong>Gender:</strong> {{ formData.gender === '1' ? 'Male' : 'Female' }}</p>
+                <p class="card-text"><strong>Skills:</strong> {{ getSelectedSkills() }}</p>
+</div>
+            </div>
+          </div>
+        </div>
+    </div>
+    
+  </template>
+  
+  <script>
+  export default {
+    data() {
+      return {
+        formData: {
+          name: '',
+          university: '',
+          gender: '',
+          skills: {
+            vue: false,
+            react: false,
+            angular: false
+          }
+        },
+        submitted: false
+      };
+    },
+    methods: {
+      submitForm() {
+        this.submitted = true;
+      },
+      getSelectedSkills() {
+        return Object.keys(this.formData.skills).filter(skill => this.formData.skills[skill]);
+      }
+    }
+  };
+  </script>
+  
+  <style scoped>
+  body {
+    background: #B8850B;
+    padding-top: 30px;
+  }
+  .main-section {
+    padding: 15px;
+    background:#f1f1f1;
+  }
+  .custom-file-control::after {
+    content: "Choose file...";
+  }
+  .custom-file-control::before {
+    content: "Browse";
+  }
+  </style>
+  
