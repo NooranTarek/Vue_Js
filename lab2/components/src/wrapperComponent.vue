@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <!-- Navbar component -->
     <nav class="navbar bg-dark navbar-dark">
       <div class="container">
         <a class="navbar-brand text-white" href="#" @click.prevent="changeView('books')">Books</a>
@@ -9,7 +8,6 @@
       </div>
     </nav>
 
-    <!-- Show different components based on the current view -->
     <FormComponent v-if="currentView === 'form'" />
     <Wishlistcomponent v-if="currentView === 'wishlist'" :wishlist="wishlist" @removeFromWishlist="removeFromWishlist" />
     <bookscomponent v-if="currentView === 'books'" :books="books" @addToWishlist="addToWishlist" @isInWishlist="isInWishlist" />
