@@ -61,7 +61,7 @@ export default {
   height: auto;
   max-width: 100%;
   max-height: 100%;
-  object-fit: contain; /* Maintain aspect ratio and fit entire image */
+  object-fit: contain; 
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 }
